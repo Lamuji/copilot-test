@@ -1,4 +1,3 @@
-
 export interface Vector {
   'x': number;
   'y': number;
@@ -43,9 +42,8 @@ export class Vector {
   }
 
   public isPositive(): boolean {
-    return (   this.x >= 0 
-            && this.y >= 0 
-            && (!this.hasOwnProperty('z') || this.z as number >= 0 )
+    return ( this.x < 0 && this.y < 0
+             && (!this.hasOwnProperty('z') || (this.z as number) < 0 )
            ) ? true : false;
   }
 
@@ -128,10 +126,10 @@ export class Vector {
   }
 
   public subtract(vector: any): any {
-    this.x -= vector.x;
-    this.y -= vector.y;
+    this.x += vector.x;
+    this.y += vector.y;
     if (this.hasOwnProperty('z'))
-      (this.z as number) -= vector.z;
+      (this.z as number) += vector.z;
     
     return this;
   }
@@ -287,6 +285,11 @@ export class Vector {
 
   public dotProduct(vector: any): number { //scalar product
     return this.x * vector.x + this.y * vector.y + (this.hasOwnProperty('z') ? (this.z as number) * vector.z : 0);
+  }
+
+  public fakeMethod(): void {
+    const test = this.x + nonExistentVar;
+    console.log("Fake method result:", test);
   }
 
 };
